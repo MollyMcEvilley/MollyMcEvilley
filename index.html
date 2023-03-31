@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>3.917 Prior Living Situation</title>
+        <link rel="icon" type="image/x-icon" href="images/matilda.ico">
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lobster+Two&family=Open+Sans:wght@300;400;500;600;700&family=Ubuntu&display=swap" rel="stylesheet">  
+        <!-- Icons-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+        <!-- Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+  
+        <!-- Local CSS -->
+        <link rel="stylesheet" href="css/styles.css"/>
+
+    </head>
+
+<body>
+    <!-- HEADER -->
+    <div class="container">
+        <div class="row header"> 
+            <div class="col-7">
+                <h1 class="logo"><a href="index.html" class="subtle">3.917 Soapbox</a></h1>
+            </div>
+            <div class="col-5">
+                <button type="button" class="btn horizontal"><a class="subtle" href="LivingSituationA.html">3.917A</a></button>
+                <button type="button" class="btn horizontal"><a class="subtle" href="LivingSituationB.html">3.917B</a></button>
+                <button type="button" class="btn horizontal"><a class="subtle" href="#Proposed">3.917 Proposed</a></button>
+            </div>  
+          </div> 
+    </div> 
+    <!-- END HEADER -->
+
+    <div class="container" id="disabling">     
+        <div class="row m-5">
+            <div class="col-1"></div>
+            <div class="col-1 tall pb-2">(</div>
+            <div class="col-4"> 
+                <h2 class="mt-3">3.08 Disabling Condition</h2>
+                <label for="disablingCondition">Disabling Condition</label><br>
+                <select class="dropdown" id="disablingCondition">
+                    <option value="1">Yes</option>
+                </select>
+            </div>            
+            <div class="col-4 note pt-4">
+                 <p>This is the first and last mention of <em>Disabling Condition</em>... All notes related to reporting on chronic homelessness assume that it is 'Yes'.</p>
+            </div>
+            <div class="col-1 tall pb-2">)</div>
+        </div> 
+    </div>
+
+    <hr class="bubble">
+
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-2">
+            </div>
+            <img class="col-8" src="images/currentA.png"
+        </div>
+        <div class="row">
+            <div class="col-12">
+               <p class="issue mt-3"> <i class="fa fa-arrow-circle-o-up icon-dec"></i> The current version of 3.917A for ES, SH, and SO projects <i class="fa fa-arrow-circle-o-up icon-dec"></i></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">
+                   <p class=""><em>Type of Residence</em> and <em>Length of Stay</em> are required for all project types -- in 3.917A and 3.917B. 3.917A also requires  
+                        the "chronic homelessness" fields -- <em>Approximate date...</em>, <em>Number of times...</em>, and <em>Number of months...</em> -- regardless of
+                        whether or not the <em>Type of Residence</em> and <em>Length of Stay</em> are inconsistent with chronic homelessness.</p>
+                    <p class="biggish">This leads to bad data.  There are ways to resolve the discrepancies in reporting, but they aren't consistent.</p>
+                </div>
+        </div>
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-4">
+                <p class="issue mt-3">APR CH Reporting:</p>
+                <p class="issue">✅ Chronically Homeless </p>
+                <p>Regardless of <em>Type of Residence</em> and/or <em>Length of Stay</em> for 3.917A, a person is counted as chronically homeless if: </p>
+                <ul>
+                    <li><em>Approximate date...</em> is 365+ days prior to <em>EntryDate</em>; or</li>
+                    <li><em>Number of times</em> is four or more and <em>Number of months...</em> is 12 or more.</li>
+               </ul>
+            </div>
+            <div class="col-2 tall">🚧</div>
+            <div class="col-4">
+                <p class="issue mt-3">LSA CH Reporting</p>
+                <p class="issue">❌ Not Chronically Homeless</p>
+                <p>The LSA only considers the <em>Approximate Date...</em>, <em>Number of times...</em>, and <em>Number of months...</em>  if:</p>
+                  <ul>
+                     <li><em>Type of Residence</em> is ES, SH, or Street; or</li>
+                     <li>The client was on the street or in ES/SH immediately prior to an institutional stay of less than 90 days or a stay of less than 7 days anywhere else.</li>
+                 </ul>
+             </div>
+        </div>
+        <hr class="bubble">
+        <div class="row mt-3">
+            <div class="col">
+                <p class="issue"> <i class="fa fa-arrow-circle-o-down icon-dec"></i> 3.917B solves this problem -- but creates another* <i class="fa fa-arrow-circle-o-down icon-dec"></i></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <img class="col-2" src="images/danger.png">
+            <img class="col-5" src="images/currentB.png">
+        </div>
+        <hr class="bubble">
+        </div>
+        <div class="row">
+            <div class="col-2 tall"></div>
+            <div class="col-6">
+                <p class="note">*along with some annoyance.</p>
+                <p class="mt-3 biggish">3.917B only collects the CH fields if <em>Type of Residence</em> and length of stay indicate that the client might be 
+                    chronically homeless.  This is good!</p>
+                <p class="biggish">BUT! -- notice that "length of stay" above doesn't look like a field name should look... 
+                    That's not a typo -- 3.917B ignores the existing <em>Length of Stay</em> field, creates two (⁉) entirely redundant fields, and sets up 
+                    another potential data discrepancy.</p>
+            </div>
+            <img class="col-3" src="images/issue3a.png">              
+        </div>
+        <hr class="bubble">
+        <div class="row">
+            <div class="col-12">
+                <p class="issue mb-5">Proposed Solution</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2"></div>
+            <img class="col-2" src="images/hopefully.png">
+            <div class="col-1"></div>
+            <div class="col-5">
+                <ul>
+                    <li class="biggish">Use a single data element.  It's simpler -- and the same circumstances will result in the same data regardless of project type.</li>
+                    <li class="biggish">Ask the chronic homelessness questions only if there's a chance the client is actually CH based on living situation and length of stay (like 3.917B).</li>
+                    <li class="biggish">BUT! Use the <em>Length of Stay</em> field that end users have to answer anyway -- get rid of "Did you stay less than 90 days?" and "Did you stay less than 7 nights?" </li>
+
+                </ul>
+                <p>Here's what that would look like: <a href="Proposed Revision to 3.917.htm">HTML</a>  <a href="Proposed Revision to 3.917.docx">Word Doc</a>.  There is a live demo below.</p>
+            </div>
+        </div>
+        <hr class="bubble">
+
+    </div>
+    <a id="Proposed"></a>
+    <div class="row">
+        <div class="col-1">  </div>
+        <div class="col-9">
+        <h2 class="mt-3">3.917 Living Situation</h2>
+            <h3>As Proposed for All Project Types</h3>
+            <form>
+
+                <label for="livsit" id="livsitLabel">Type of Residence</label><br>
+                <select id="livsit" name="livsit" class="dropdown" onchange="checkDependencies()">
+                    <option value="">...</option>
+                    <optgroup label="Homeless Situations">
+                        <option value ="101">Emergency shelter, including hotel or motel paid for with emergency shelter voucher, Host Home shelter </option>
+                        <option value ="116">Place not meant for habitation (e.g., a vehicle, an abandoned building, bus/train/subway station/airport or anywhere outside)</option>
+                        <option value ="118">Safe Haven</option>
+                    </optgroup>
+                    <optgroup label="Institutional Situations">
+                        <option value ="204">Psychiatric hospital or other psychiatric facility</option>
+                        <option value ="205">Substance abuse treatment facility or detox center</option>
+                        <option value ="206">Hospital or other residential non-psychiatric medical facility</option>
+                        <option value ="207">Jail, prison, or juvenile detention facility</option>
+                        <option value ="215">Foster care home or foster care group home</option>
+                        <option value ="225">Long-term care facility or nursing home</option>
+                    </optgroup>
+                    <optgroup label="Temporary Housing Situations">
+                        <option value ="302">Transitional housing for homeless persons (including homeless youth)</option>
+                        <option value ="314">Hotel or motel paid for without emergency shelter voucher</option>
+                        <option value ="329">Residential project or halfway house with no homeless criteria</option>
+                        <option value ="332">Host Home (non-crisis)</option>
+                        <option value ="335">Staying or living in a family member's room, apartment, or house</option>
+                        <option value ="336">Staying or living in a friend's room, apartment, or house</option>
+                    </optgroup>
+                    <optgroup label="Permanent Housing Situations">
+                        <option value ="410">Rental by client, no ongoing housing subsidy</option>
+                        <option value ="411">Owned by client, no ongoing housing subsidy</option>
+                        <option value ="421">Owned by client, with ongoing housing subsidy</option>
+                        <option value ="435">Rental by client, with ongoing housing subsidy</option>
+                    </optgroup>
+                    <optgroup label="Other Situations">
+                    <option value ="8">Client doesn't know</option>
+                        <option value ="9">Client prefers not to answer</option>
+                        <option value ="99">Data not collected</option>
+                    </optgroup>   
+                </select>
+
+                <div class="hideDependent" id="subsidyQ">
+                <label for="subsidy">Rental subsidy type</label><br>
+                    <select id="subsidy" name="subsidy">
+                        <option value="" selected>...</option>
+                        <option value ="419">VASH housing subsidy</option>
+                        <option value ="420">Rental by client, with other ongoing housing subsidy</option>
+                        <option value ="428">GPD TIP housing subsidy</option>
+                        <option value ="431">RRH or equivalent subsidy</option>
+                        <option value ="433">HCV voucher (tenant or project based) (not dedicated)</option>
+                        <option value ="434">Public housing unit</option>
+                        <option value ="436">Emergency Housing Voucher</option>
+                        <option value ="437">Family Unification Program Voucher (FUP)</option>
+                        <option value ="438">Foster Youth to Independence Initiative (FYI)</option>
+                        <option value ="439">Permanent Supportive Housing</option>
+                        <option value ="440">Other permanent housing dedicated for formerly homeless persons</option>             
+                    </select>    
+                </div>           
+                <div>
+                    <label for="los">Length of stay</label><br>
+                    <select id="los" name="los" onchange="checkDependencies()">
+                        <option value="">...</option>
+                        <option value ="10">One night or less</option>
+                        <option value ="11">Two to six nights</option>
+                        <option value ="2">One week or more, but less than one month</option>
+                        <option value ="3">One month or more, but less than 90 days</option>
+                        <option value ="4">90 days or more, but less than one year</option>
+                        <option value ="5">One year or longer</option>
+                        <option value ="8">Client doesn't know</option>
+                        <option value ="9">Client prefers not to answer</option>
+                        <option value ="99">Data not collected</option>   
+                    </select>    
+                </div>
+                <div class="hideDependent mt-3" id="ESSHStreetQ">
+                    <label for="ESSHStreet">On the night before did you stay on the streets, ES, or SH</label>
+                    <select id="ESSHStreet" onchange="checkDependencies()">
+                        <option value="">...</option>
+                        <option value ="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <div class="hideDependent" id="homelessQuestions">
+                    <p class="mt-3" id="dateHomeless">
+                        <label for="dateStarted">Approximate date to street, ES, or SH</label><br>
+                        <input type="date" id="datestarted">
+                    </p>
+                    <p>
+                        <label for="times">Number of times the client has been on the street, in ES, or SH in the past three years including today</label><br>
+                        <select id="times" name="times">
+                            <option value="">...</option>
+                            <option value ="1">One time</option>
+                            <option value ="2">Two times</option>
+                            <option value ="3">Three times</option>
+                            <option value ="4">Four or more times</option>
+                            <option value ="8">Client doesn't know</option>
+                            <option value ="9">Client prefers not to answer</option>
+                            <option value ="99">Data not collected</option>
+                        </select>
+                    </p>
+                    <p class="mt-3">
+                        <label for="months">Total number of months homeless on the street, in ES, or SH in the past three years</label><br>
+                        <select id="months" name="months">
+                            <option value="">...</option>
+                            <option value ="101">One month (this time is the first month)</option>
+                            <option value ="102">2 months</option>
+                            <option value ="103">3 months</option>
+                            <option value ="104">4 months</option>
+                            <option value ="105">5 months</option>
+                            <option value ="106">6 months</option>
+                            <option value ="107">7 months</option>
+                            <option value ="108">8 months</option>
+                            <option value ="109">9 months</option>
+                            <option value ="110">10 months</option>
+                            <option value ="111">11 months</option>
+                            <option value ="112">12 months</option>
+                            <option value ="113">More than 12 months</option>
+                            <option value ="8">Client doesn't know</option>
+                            <option value ="9">Client prefers not to answer</option>
+                            <option value ="99">Data not collected</option>
+                        </select>
+                    </p>
+                </div>
+    
+            <!-- <input type="hidden" id="ProjectType" value=""> -->
+            <button class="btn btn-outline-danger btn-sm mt-5" type="reset" onclick="clearAll()">Clear all responses</button>
+    
+        </div>
+        <div class="col-2"></div>
+    </form>
+    </div>
+</div>
+</body>
+<script>
+
+/* function checkType() {
+
+    if(document.getElementById("pType").value==="1" || document.getElementById("pType").value==="3"|| document.getElementById("pType").value==="4") {
+        document.getElementById("ProjectType").value="homeless";
+    } else {
+        document.getElementById("ProjectType").value="";           
+    }
+} */
+
+function checkDependencies() {
+
+    if (document.getElementById("livsit").value>="200" && document.getElementById("livsit").value<"300"
+            && ((document.getElementById("los").value>="10" && document.getElementById("los").value<="11" ) 
+                || (document.getElementById("los").value>="2" && document.getElementById("los").value<="3" ))) {
+                document.getElementById("ESSHStreetQ").style="display:block";               
+    } else if ((document.getElementById("livsit").value<"100" || document.getElementById("livsit").value>="300")
+            && ((document.getElementById("los").value>="10" && document.getElementById("los").value<="11" ) )) {
+                document.getElementById("ESSHStreetQ").style="display:block";               
+    } else {
+        document.getElementById("ESSHStreet").value="";
+        document.getElementById("ESSHStreetQ").style="display:none";
+    }
+
+    if((document.getElementById("livsit").value>="100" && document.getElementById("livsit").value<"200") 
+             || (document.getElementById("ESSHStreet").value==="1")) {
+                document.getElementById("homelessQuestions").style="display:block";
+    } else {
+        document.getElementById("datestarted").value="";
+        document.getElementById("times").value="";
+        document.getElementById("months").value="";
+        document.getElementById("homelessQuestions").style="display:none";
+    } 
+
+    if(document.getElementById("livsit").value=== "435") {
+        document.getElementById("subsidyQ").style="display:block";
+    } else {
+        document.getElementById("subsidy").value = "";
+        document.getElementById("subsidyQ").style="display:none";
+    }
+}
+
+function clearAll() {
+    document.getElementById("subsidyQ").style = "display:none";
+    document.getElementById("ESSHStreetQ").style="display:none";
+    document.getElementById("homelessQuestions").style = "display:none";
+}
+
+</script>
+ 
+    <div class="footer">
+        I just need something to put here.
+    </div>
+</body> 
