@@ -28,20 +28,22 @@ function validateCell (chkIndex, proposed) {
     // proposed value...
     for (let i=0; i<81; i++) {
         if (cells[i].value == proposed && i != chkIndex) {
-            if (rows[i] == rows[chkIndex]) {
+            if (cellInfo[i].row == cellInfo[chkIndex].row) {
                 where = 'row'; 
-            } else if (columns[i] == columns[chkIndex]) {
+            }
+            if (cellInfo[i].col == cellInfo[chkIndex].col) {
                 where = 'column';
-            } else if (blocks[i] == blocks[chkIndex]) {
+            }
+            if (cellInfo[i].blk == cellInfo[chkIndex].blk) {
                 where = 'block'; 
             }
+        }
 
-            if (where.length > 1) {
-                cells[chkIndex].value='';
-                if(inProgress == true) {console.log('Cleanup on aisle ' + chkIndex + '! There is already a ' + proposed + ' in this ' + where + '.');}
-                else {issues.textContent = 'There is already a ' + proposed + ' in this ' + where + '.'; }
-                return false; 
-            }
+        if (where.length > 1) {
+            cells[chkIndex].value='';
+            if(inProgress == true) {console.log('Cleanup on aisle ' + chkIndex + '! There is already a ' + proposed + ' in this ' + where + '.');}
+            else {issues.textContent = 'There is already a ' + proposed + ' in this ' + where + '.'; }
+            return false; 
         }
     }
     return true; 
