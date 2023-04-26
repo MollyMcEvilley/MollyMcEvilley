@@ -1,304 +1,218 @@
-var validValues = ['1', '2','3','4','5','6', '7', '8', '9']; 
-
+<<<<<<< HEAD
+const validValues = [1,2,3,4,5,6,7,8,9];
 const cells = Array.from(document.querySelectorAll('input')); 
-const issues = document.getElementById("alert"); 
-var cellInfo = [];
+var possibles = Array.from(''.repeat(81)); 
 var inProgress = false; 
-var solved = 0
 
-for (let i=0; i<81; i++) {
+for (i=0; i<81; i++) {
     cells[i].id='c' + i;
-    let cell = {id: i
-            , row: (Math.floor(i/9)).toString()
-            , col: (i%9).toString()
-            , blk: (Math.floor((i%9)/3) + (Math.floor(i/27)*3)).toString()
-            , poss: '123456789'
-            , num: ''
-            , solved: false}; 
-    cellInfo.push(cell); 
+    possibles[i] = '123456789';
 }
-
-// FUNCTIONS
-
-function validateCell (chkIndex, proposed) {
-    //called by the keyup event listener to validate user input
-    let where = ''; 
-
-    // Look at all other cells in the grid to check for conflicts with the 
-    // proposed value...
-    for (let i=0; i<81; i++) {
-        if (cells[i].value == proposed && i != chkIndex) {
-            if (cellInfo[i].row == cellInfo[chkIndex].row) {
-                where = 'row'; 
-            }
-            if (cellInfo[i].col == cellInfo[chkIndex].col) {
-                where = 'column';
-            }
-            if (cellInfo[i].blk == cellInfo[chkIndex].blk) {
-                where = 'block'; 
-            }
-        }
-
-        if (where.length > 1) {
-            cells[chkIndex].value='';
-            if(inProgress == true) {console.log('Cleanup on aisle ' + chkIndex + '! There is already a ' + proposed + ' in this ' + where + '.');}
-            else {issues.textContent = 'There is already a ' + proposed + ' in this ' + where + '.'; }
-            return false; 
-        }
-    }
-    return true; 
-}
- 
-function solveSudoku () {
-
-    if (!inProgress) {
-        if (!getUserInput()) {
-            issues.textContent = 'Nothing to solve here.';
-        }
-    } 
-    
-    if (inProgress) {
-        while (checkPossibles()) {    
-            checkPossibles(); 
-        } 
-
-        if (checkGroupCombosForValue()) {
-            checkPossibles(); 
-        }
-
-        if (solved == 81) {
-            issues.textContent = 'All done!'; 
-        } else {
-            issues.textContent = "We done all we can do and we cain't do no more.";
-        }
-    }
-}
-    
-function getUserInput () {
-    let toUpdate = []; 
-
-    for (let i=0; i<81; i++) {
-        cells[i].disabled = true; 
-        if (!cells[i].value) {
-            cells[i].classList.add('notSolved'); 
-            cells[i].value = cellInfo[i].poss;
-        } else {
-            let value = cells[i].value; 
-            cells[i].classList.add('userEntered'); 
-            cellInfo[i].num = value; 
-            cellInfo[i].solved = true; 
-            cellInfo[i].poss = '';
-            solved++; 
-            toUpdate.push(i); 
-        }
-    }
-
-    if (toUpdate.length == 0) {
-        return false; 
-    } else {
-        for (let i=0; i<toUpdate.length; i++) {
-            eliminatePossibility(toUpdate[i], cellInfo[toUpdate[i]].num);
-        }
-        inProgress = true; 
-        return true; 
-    }
-}
-
-function eliminatePossibility (index, val) {
-    
-    for (let i=0; i<81; i++) {
-        if (i==index || cellInfo[i].solved == true || !cellInfo[i].poss) {
-            
-        } else if ((cellInfo[i].row == cellInfo[index].row || cellInfo[i].col == cellInfo[index].col || cellInfo[i].blk == cellInfo[index].blk) 
-                && cellInfo[i].poss.includes(val)) {
-        cellInfo[i].poss = cellInfo[i].poss.replace(val, ''); 
-        cells[i].value = cellInfo[i].poss;
-         
-        if (!cellInfo[i].poss && !cellInfo[i].num) {alert("Here is where it's fucked up -- index " + index + " and val " + val);}
-        }
-    }
-}
-
-function checkPossibles () {
-    if (solved==81) {return false;}
-
-    let updated = false; 
-
-    for (let i=0; i<81; i++) {
-        let val = cellInfo[i].poss; 
-        if (val.length == 1) {
-            cells[i].classList.remove('notSolved'); 
-            cells[i].classList.add('solved'); 
-            cellInfo[i].num = val;
-            cellInfo[i].poss = ''; 
-            cellInfo[i].solved = true;
-            solved++;  
-            eliminatePossibility(i, val); 
-            updated = true; 
-        }
-    }  
-    
-    if(updated) {return true;}
-
-    //check rows/columns/blocks for numbers with only 1 possible location
-    for (let grp=0; grp<27; grp++) {
-        let candidates = []; 
-        let i = 0; 
-        while(i < 81 && candidates.length < 9) {
-            if(cellInfo[i].row == grp || cellInfo[i].col == grp-9 || cellInfo[i].blk == grp-18) {
-                candidates.push(i); 
-            } 
-            i++;
-        }
-
-        for(let val=1; val<10; val++) {
-            if(checkGroupForValue(candidates, val)) {
-                updated = true; 
-            } 
-        }
-    }
-
-    if(updated) {return true;}
-
-    for (let grp=0; grp<27; grp++) {
-        let candidates = []; 
-        let i = 0; 
-        while(i < 81 && candidates.length < 9) {
-            if(cellInfo[i].row == grp || cellInfo[i].col == grp-9 || cellInfo[i].blk == grp-18 ){
-                candidates.push(i); 
-            } 
-            i++;
-        }
-
-        let multiDigits = []; 
-        for (i=0; i<candidates.length; i++) {
-            let multi = cellInfo[candidates[i]].poss;
-            if (multi.length > 1 && multi.length <6) {
-                if (!multiDigits.includes(multi)) {
-                    multiDigits.push(multi); 
-                }
-            }
-        }
-
-        let m = 0;
-        while(m < multiDigits.length) {
-            let val = multiDigits[m]; 
-            if (checkGroupForValue(candidates, val)) {
-                updated = true; 
-            }
-            m++; 
-        }
-    }
-
-    if(updated) {return true;}
-
-    for(v=0; v<9; v++) {
-        for (comboBlock=0; comboBlock<9; comboBlock++) {
-            if (checkGroupCombosForValue(validValues[v], comboBlock)) {
-                return true; 
-           }
-        }
-    }
-    
-    return updated; 
-}
-    
-
- 
-function checkGroupForValue(candidates, val) {
-    let updated = false; 
-    let valPossibles = [];
-    let chkNum = ''; 
-    chkNum = String(val); 
-    
-
-   for(let i=0; i<candidates.length; i++) {
-        let possible = cellInfo[candidates[i]].poss; 
-        if (possible.includes(chkNum) && chkNum.length == 1) {
-            valPossibles.push(candidates[i]); 
-        } else if (possible == val && chkNum.length > 1) {
-            valPossibles.push(candidates[i]); 
-        }
-    }            
-
-    if(valPossibles.length !== chkNum.length) {return false; }
-
-    if(valPossibles.length == 1 && chkNum.length == 1) {
-        let solvedCell = valPossibles[0]; 
-        cellInfo[solvedCell].num = chkNum; 
-        cells[solvedCell].value = chkNum;
-        cells[solvedCell].classList.remove('notSolved'); 
-        cells[solvedCell].classList.add('solved'); 
-        cellInfo[solvedCell].poss = ''; 
-        cellInfo[solvedCell].solved = true; 
-        solved++; 
-        eliminatePossibility(solvedCell, chkNum); 
-        updated = true; 
-    } else {
-        for(let n=0; n < chkNum.length; n++) {
-            digitOfVal = chkNum.charAt(n);
-            for (let i=0; i<candidates.length; i++) {
-                if (cellInfo[candidates[i]].poss != val && cellInfo[candidates[i]].poss.includes(digitOfVal)) {
-                    cellInfo[candidates[i]].poss = cellInfo[candidates[i]].poss.replace(digitOfVal, ''); 
-                    cells[candidates[i]].value = cellInfo[candidates[i]].poss 
-                    updated = true;
-                }
-            }
-        }
-    }
-
-    return updated;
-}
-
-
 
 // EVENT LISTENERS
 
 // check every keyup to make sure it's consistent w/ sudoku logic
-for (let i=0; i < 81; i++) {
+for (i=0; i < cells.length; i++) {
     let cell = cells[i]; 
     cell.addEventListener('keyup', function (event){
         if (parseInt(event.key) > 0 && parseInt(event.key) < 10) {
             validateCell(i, cell.value);
         } else {
-            cell.value = '';
+            cells[i].value = '';
         }
     }
 )};
 
 // listen for arrow keys and use them to navigate because I am lazy
-for (let i=0; i < 81; i++) {
+for (i=0; i < cells.length; i++) {
     let cell = cells[i]; 
     cell.addEventListener('keydown', function(event) {
         if (event.key.startsWith("Arrow")) {
             navigate(cell, event.key); 
         } 
     })
-};
+}
 
-document.getElementById("reset").addEventListener('click', resetGrid); 
+// the reset button -- uh -- RESETs the sudoku grid to a pristine state
+document.getElementById("reset").addEventListener('click', function() {
+    for(i=0; i<cells.length; i++) {
+        cells[i].classList.remove("userEntered");
+        cells[i].classList.remove("solved"); 
+        cells[i].value = "";
+        cells[i].disabled = false; 
+    }
+})
 
+// the solve button calls the solve function (derp)
 document.getElementById("solve").addEventListener('click', solveSudoku); 
 
-// UTILITY FUNCTIONS - reset and navigate
-
-function resetGrid () {
-    for(let i=0; i<81; i++) {
-        let cell = cells[i]; 
-        cell.classList.remove("userEntered");
-        cell.classList.remove("solved"); 
-        cell.classList.remove("notSolved");
-        cell.value = '';
-        cell.disabled = false; 
-        inProgress = false;  
-        cellInfo[i].num = '';
-        cellInfo[i].poss = '123456789';
-        cellInfo[i].solved = false;
-        issues.textContent = '';
+function solveSudoku () {
+    //call function to get values from the UI into solution array
+    if (inProgress == false) {
+        getStarted(); 
+    } else {
+        updatePossibles()
     }
 }
 
-function navigate (cell, keyName) {
+// FUNCTIONS
+
+function validateCell (index, proposed) {
+    //called by the keyup event listener to validate user input
+    //and also by the solve functions to validate proposed solution values 
+    let where = ''; 
+
+    if (cells[index].value == '' || cells[index].value == undefined) {return true;}
+
+    if (!validValues.includes(parseInt(cells[index].value))) {
+        cells[index].value=''; 
+        document.getElementById('alert').textContent = 'Valid values are numbers 1-9.'; 
+        return false; 
+    } 
+
+    var row = getRow(index); 
+    var col = getColumn(index); 
+    var blk = getBlock(index); 
+
+    for (valLoop=0; valLoop<81; valLoop++) {
+        if (valLoop != index && cells[valLoop].value == proposed) {
+            var otherRow = getRow(valLoop); 
+            var otherCol = getColumn(valLoop); 
+            var otherBlk = getBlock(valLoop);             
+
+            if (otherBlk == blk) {where = 'block';}
+            if (otherRow == row) {where = 'row';}
+            if (otherCol == col) {where = 'column';}
+
+            if (where.length > 1) {
+                cells[index].value='';
+                if(inProgress == true) {alert('Cleanup on aisle ' + index + '! There is already a ' + proposed + ' in this ' + where + '.');}
+                    else {document.getElementById('alert').textContent = 'There is already a ' + proposed + ' in this ' + where + '.'; }
+                    return false; 
+            }
+        }
+    }
+    return true; 
+}
+
+function getStarted() {
+ 
+    for(startLoop=0; startLoop<81; i++) {
+        if(inProgress == false) {
+            //disable any additional user entries
+            cells[startLoop].disabled = true; 
+
+            //identify any user-entered values in the UI...
+            let userEntered = cells[startLoop].value; 
+            if (userEntered != '') {
+                cells[startLoop].classList.add("userEntered"); 
+
+                //...validate them again because shit happens
+                if (validateCell (startLoop, userEntered)) {
+                    //and remove the value from possibles for cells in the same row/column/block
+                    updatePossibles(startLoop, userEntered);
+                }  
+            } 
+        }
+    }
+    inProgress=true; 
+    solveSudoku(); 
+}
+
+function updatePossibles(index, checkForValue) {
+    let row = getRow(index); 
+    let col = getColumn(index); 
+    let blk = getBlock(index);         
+    
+    possibles[index] = ''; 
+
+    for(checkLoop=0; checkLoop<81; checkLoop++) {
+        if (checkLoop != index && possibles[checkLoop].includes(checkForValue)) {
+            //get the cell's row / column / block
+            var otherRow = getRow(index); 
+            var otherCol = getColumn(index); 
+            var otherBlk = getBlock(index);      
+            
+            if (otherBlk == blk || otherRow == row || otherCol == col) {
+                possibles[checkLoop].replace(checkForValue, ''); 
+                return true; 
+            } else {
+                return false; 
+            }
+        }
+    }
+
+}
+ 
+function checkPossibles () {
+    for (possLoop=0; possLoop<81; possLoop++) {
+        if (possibles[possLoop].valueOf.length == 1) {
+            if(validateCell(possLoop, possibles[possLoop])) {
+                cells[possLoop].value = possibles[i]; 
+                updatePossibles(possLoop, cells[possLoop].value); 
+            }
+        }
+    }    
+}
+
+function getRow (i) {
+    return Math.floor(i/9); 
+}
+function getColumn (i) {
+    return i%9; 
+}
+function getBlock (i) {
+    return i%3 + (Math.floor(i/27)*3);
+}
+
+// functions specific to the UI (HTML and CSS) but not to the sudoku logic
+
+/* function validateInput (cell) {
+
+    var num = parseInt(cell.value);
+    var r = cell.className.substring(7,11); 
+    var c = cell.className.substring(12,16); 
+    var b = cell.className.substring(17,21);
+
+    if (num < 1 || num > 9) {
+        cell.value=""; 
+        return; 
+    }
+
+    var check = Array.from(document.getElementsByClassName(r)); 
+
+    for (i=0; i< check.length; i++) {
+       if (i != check.indexOf(cell) && parseInt(check[i].value) == num) {
+            alert("There is already a " + check[i].value + " in this row."); 
+            cell.value = "";
+            return;
+        }
+    }
+
+    var check = Array.from(document.getElementsByClassName(c)); 
+
+    for (i=0; i< check.length; i++) {
+        if (i != check.indexOf(cell) && parseInt(check[i].value) == num) {
+            alert("There is already a " + check[i].value + " in this column."); 
+            cell.value = "";
+            return;
+        }
+    }
+
+    var check = Array.from(document.getElementsByClassName(b)); 
+
+    for (i=0; i< check.length; i++) {
+        if (i != check.indexOf(cell) && parseInt(check[i].value) == num) {
+            alert("There is already a " + check[i].value + " in this block."); 
+            cell.value = "";
+            return;
+        }
+    }
+
+    document.getElementById("alert").textContent = "So far so good."; 
+ }
+ */
+ function navigate (cell, keyName) {
             
     var current = cells.indexOf(cell); 
     var goTo = -1; 
@@ -313,59 +227,244 @@ function navigate (cell, keyName) {
             var goTo = current + 1; 
         }
     
-    if (goTo < 0 || goTo >= 81) { 
+    if (goTo < 0 || goTo >= cells.length) { 
         return; 
     } else {
         cells[goTo].focus(); 
     }
+=======
+const validValues = [1,2,3,4,5,6,7,8,9];
+const cells = Array.from(document.querySelectorAll('input')); 
+var possibles = Array.from(''.repeat(81)); 
+var inProgress = false; 
+
+for (i=0; i<81; i++) {
+    cells[i].id='c' + i;
+    possibles[i] = '123456789';
 }
 
-function checkGroupCombosForValue(val, b){
-    let updated = false;
+// EVENT LISTENERS
 
-    let blk = [];
-    let row = [];  
-    let col = []; 
+// check every keyup to make sure it's consistent w/ sudoku logic
+for (i=0; i < cells.length; i++) {
+    let cell = cells[i]; 
+    cell.addEventListener('keyup', function (event){
+        if (parseInt(event.key) > 0 && parseInt(event.key) < 10) {
+            validateCell(i, cell.value);
+        } else {
+            cells[i].value = '';
+        }
+    }
+)};
 
-    for(let chkBlock=0; chkBlock<81; chkBlock++) {
-        if (cellInfo[chkBlock].blk == b && cellInfo[chkBlock].poss.includes(val)) {
-            blk.push(chkBlock); 
-            if (!row.includes(cellInfo[chkBlock].row)) {
-                row.push(cellInfo[chkBlock].row);
+// listen for arrow keys and use them to navigate because I am lazy
+for (i=0; i < cells.length; i++) {
+    let cell = cells[i]; 
+    cell.addEventListener('keydown', function(event) {
+        if (event.key.startsWith("Arrow")) {
+            navigate(cell, event.key); 
+        } 
+    })
+}
+
+// the reset button -- uh -- RESETs the sudoku grid to a pristine state
+document.getElementById("reset").addEventListener('click', function() {
+    for(i=0; i<cells.length; i++) {
+        cells[i].classList.remove("userEntered");
+        cells[i].classList.remove("solved"); 
+        cells[i].value = "";
+        cells[i].disabled = false; 
+    }
+})
+
+// the solve button calls the solve function (derp)
+document.getElementById("solve").addEventListener('click', solveSudoku); 
+
+function solveSudoku () {
+    //call function to get values from the UI into solution array
+    if (inProgress == false) {
+        getStarted(); 
+    } else {
+        updatePossibles()
+    }
+}
+
+// FUNCTIONS
+
+function validateCell (index, proposed) {
+    //called by the keyup event listener to validate user input
+    //and also by the solve functions to validate proposed solution values 
+    let where = ''; 
+
+    if (cells[index].value == '' || cells[index].value == undefined) {return true;}
+
+    if (!validValues.includes(parseInt(cells[index].value))) {
+        cells[index].value=''; 
+        document.getElementById('alert').textContent = 'Valid values are numbers 1-9.'; 
+        return false; 
+    } 
+
+    var row = getRow(index); 
+    var col = getColumn(index); 
+    var blk = getBlock(index); 
+
+    for (valLoop=0; valLoop<81; valLoop++) {
+        if (valLoop != index && cells[valLoop].value == proposed) {
+            var otherRow = getRow(valLoop); 
+            var otherCol = getColumn(valLoop); 
+            var otherBlk = getBlock(valLoop);             
+
+            if (otherBlk == blk) {where = 'block';}
+            if (otherRow == row) {where = 'row';}
+            if (otherCol == col) {where = 'column';}
+
+            if (where.length > 1) {
+                cells[index].value='';
+                if(inProgress == true) {alert('Cleanup on aisle ' + index + '! There is already a ' + proposed + ' in this ' + where + '.');}
+                    else {document.getElementById('alert').textContent = 'There is already a ' + proposed + ' in this ' + where + '.'; }
+                    return false; 
             }
-            if (!col.includes(cellInfo[chkBlock].col)) {
-                col.push(cellInfo[chkBlock].col);
+        }
+    }
+    return true; 
+}
+
+function getStarted() {
+ 
+    for(startLoop=0; startLoop<81; i++) {
+        if(inProgress == false) {
+            //disable any additional user entries
+            cells[startLoop].disabled = true; 
+
+            //identify any user-entered values in the UI...
+            let userEntered = cells[startLoop].value; 
+            if (userEntered != '') {
+                cells[startLoop].classList.add("userEntered"); 
+
+                //...validate them again because shit happens
+                if (validateCell (startLoop, userEntered)) {
+                    //and remove the value from possibles for cells in the same row/column/block
+                    updatePossibles(startLoop, userEntered);
+                }  
+            } 
+        }
+    }
+    inProgress=true; 
+    solveSudoku(); 
+}
+
+function updatePossibles(index, checkForValue) {
+    let row = getRow(index); 
+    let col = getColumn(index); 
+    let blk = getBlock(index);         
+    
+    possibles[index] = ''; 
+
+    for(checkLoop=0; checkLoop<81; checkLoop++) {
+        if (checkLoop != index && possibles[checkLoop].includes(checkForValue)) {
+            //get the cell's row / column / block
+            var otherRow = getRow(index); 
+            var otherCol = getColumn(index); 
+            var otherBlk = getBlock(index);      
+            
+            if (otherBlk == blk || otherRow == row || otherCol == col) {
+                possibles[checkLoop].replace(checkForValue, ''); 
+                return true; 
+            } else {
+                return false; 
             }
         }
     }
 
-    if (blk.length > 1 && col.length == 1) {
-        for (let i=0; i<81; i++) {
-            if (cellInfo[i].blk != b) {
-                if (cellInfo[i].col == col[0]) {
-                    if (cellInfo[i].poss.includes(val)) {
-                        cellInfo[i].poss = cellInfo[i].poss.replace(val, ''); 
-                        cells[i].value = cellInfo[i].poss;   
-                    }                          
-                } 
+}
+ 
+function checkPossibles () {
+    for (possLoop=0; possLoop<81; possLoop++) {
+        if (possibles[possLoop].valueOf.length == 1) {
+            if(validateCell(possLoop, possibles[possLoop])) {
+                cells[possLoop].value = possibles[i]; 
+                updatePossibles(possLoop, cells[possLoop].value); 
             }
         }
-        if(updated){return true;}
     }    
-    if (blk.length > 1 && row.length == 1) {
-        for (let i=0; i<81; i++) {
-            if (cellInfo[i].blk != b) {
-                if (cellInfo[i].row == row[0]) {
-                    if (cellInfo[i].poss.includes(val)) {
-                        cellInfo[i].poss = cellInfo[i].poss.replace(val, ''); 
-                        cells[i].value = cellInfo[i].poss; 
-                        updated = true;                             
-                    }                          
-                } 
-            }
+}
+
+function getRow (i) {
+    return Math.floor(i/9); 
+}
+function getColumn (i) {
+    return i%9; 
+}
+function getBlock (i) {
+    return i%3 + (Math.floor(i/27)*3);
+}
+
+// functions specific to the UI (HTML and CSS) but not to the sudoku logic
+
+/* function validateInput (cell) {
+
+    var num = parseInt(cell.value);
+    var r = cell.className.substring(7,11); 
+    var c = cell.className.substring(12,16); 
+    var b = cell.className.substring(17,21);
+
+    if (num < 1 || num > 9) {
+        cell.value=""; 
+        return; 
+    }
+
+    var check = Array.from(document.getElementsByClassName(r)); 
+
+    for (i=0; i< check.length; i++) {
+       if (i != check.indexOf(cell) && parseInt(check[i].value) == num) {
+            alert("There is already a " + check[i].value + " in this row."); 
+            cell.value = "";
+            return;
         }
-        if(updated){return true;}
-    }    
+    }
+
+    var check = Array.from(document.getElementsByClassName(c)); 
+
+    for (i=0; i< check.length; i++) {
+        if (i != check.indexOf(cell) && parseInt(check[i].value) == num) {
+            alert("There is already a " + check[i].value + " in this column."); 
+            cell.value = "";
+            return;
+        }
+    }
+
+    var check = Array.from(document.getElementsByClassName(b)); 
+
+    for (i=0; i< check.length; i++) {
+        if (i != check.indexOf(cell) && parseInt(check[i].value) == num) {
+            alert("There is already a " + check[i].value + " in this block."); 
+            cell.value = "";
+            return;
+        }
+    }
+
+    document.getElementById("alert").textContent = "So far so good."; 
+ }
+ */
+ function navigate (cell, keyName) {
+            
+    var current = cells.indexOf(cell); 
+    var goTo = -1; 
+
+        if (keyName == "ArrowUp") {
+            var goTo = current - 9; 
+        } else if (keyName == "ArrowLeft") {
+            var goTo = current - 1;  
+        } else if (keyName == "ArrowDown") {
+            var goTo = current + 9; 
+        } else if (keyName == "ArrowRight") {
+            var goTo = current + 1; 
+        }
     
-    return updated; 
+    if (goTo < 0 || goTo >= cells.length) { 
+        return; 
+    } else {
+        cells[goTo].focus(); 
+    }
+>>>>>>> 3131b38d948dd218ebace5375aa943b73a665307
 }
