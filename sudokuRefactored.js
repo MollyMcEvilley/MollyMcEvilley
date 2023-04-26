@@ -5,6 +5,7 @@ const msgToUser = document.getElementById("alert");
 var cellInfo = [];
 var inProgress = false; 
 var completed = 0
+var startTime; 
 
 for (let i=0; i<81; i++) {
     cells[i].id='c' + i;
@@ -57,6 +58,8 @@ function validateCell (chkIndex, proposed) {
 }
  
 function solveSudoku () {
+    
+    startTime = Date.now(); 
 
     if (!inProgress) {
         console.log ("solveSudoku calls getUserInput")
@@ -411,7 +414,9 @@ function navigate (cell, keyName) {
 function theEnd () {
     let solves = 0; 
     let userCells = 0; 
-    
+    endTime = Date.now(); 
+    solveTime = endTime - startTime; 
+    console.log("Solved in " + solveTime + "milliseconds"); 
     for (let i=0; i<81; i++) {
         if (cells[i].classList.contains("userEntered")) {
             userCells++; 
@@ -433,7 +438,7 @@ function theEnd () {
         }
         myPart = myPart + "That might be because I'm a sad and incomplete little program, but it might also be because there is more than one possible solution. "
     } else {
-        myPart = "I figured out values for the other " + solves + " cells and we are all done!";
+        myPart = "I figured out values for the other " + solves + " cells in " + solveTime + " milliseconds and we are all done!";
     }
     
     farewellMsg = yourPart + myPart; 
