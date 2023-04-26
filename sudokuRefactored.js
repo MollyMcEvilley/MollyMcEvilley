@@ -380,11 +380,12 @@ function resetGrid () {
         cell.classList.remove("solved"); 
         cell.classList.remove("notSolved");
         cell.value = '';
-        cell.disabled = false; 
+        cell.disabled = false;
+        completed = 0; 
         inProgress = false;  
         cellInfo[i].num = '';
         cellInfo[i].poss = '123456789';
-        cellInfo[i].solved = false;
+        cellInfo[i].solved = '';
         msgToUser.textContent = '';
     }
 }
